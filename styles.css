@@ -1,0 +1,100 @@
+/* Mobile-first. Dark theme because gym lighting is weird and white screens are harsh. */
+:root {
+  --bg: #0b1220;
+  --panel: #111827;
+  --panel-2: #1f2937;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #60a5fa;
+  --accent-2: #34d399;
+  --danger: #f87171;
+  --border: #374151;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.4 system-ui, sans-serif; }
+body { padding-bottom: env(safe-area-inset-bottom); }
+
+header {
+  padding: 12px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; z-index: 10;
+}
+header h1 { margin: 0; font-size: 18px; font-weight: 600; }
+#status { font-size: 12px; color: var(--muted); }
+
+main { padding: 16px; max-width: 640px; margin: 0 auto; }
+.screen > h2 { margin-top: 0; }
+
+label { display: block; margin: 8px 0; font-size: 13px; color: var(--muted); }
+label input, label select, input[type=text], input[type=number], select {
+  width: 100%;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 16px; /* 16+ prevents iOS zoom on focus */
+  margin-top: 4px;
+}
+label.check { display: flex; align-items: center; gap: 8px; color: var(--text); font-size: 15px; }
+label.check input { width: auto; margin: 0; }
+
+button {
+  background: var(--accent);
+  color: #0b1220;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
+}
+button.secondary { background: var(--panel-2); color: var(--text); width: auto; padding: 8px 12px; }
+
+hr { border: 0; border-top: 1px solid var(--border); margin: 20px 0; }
+
+.row { display: flex; gap: 8px; align-items: flex-end; }
+.row.between { justify-content: space-between; align-items: center; }
+.row .grow { flex: 1; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 12px 0;
+}
+.card .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+
+ul { list-style: none; padding: 0; margin: 8px 0; }
+li.item {
+  padding: 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+li.item .tag {
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--panel-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+li.set {
+  background: var(--panel-2);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-family: ui-monospace, monospace;
+}
+
+#search { margin-bottom: 8px; }

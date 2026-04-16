@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <title>Lift Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Dexie wraps IndexedDB so we can write db.sets.add({...}) instead of 20 lines of IDB boilerplate -->
+  <script src="https://unpkg.com/dexie@4.0.10/dist/dexie.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Lift Tracker</h1>
+    <div id="status"></div>
+  </header>
+
+  <main>
+    <!-- Screen: HOME (start or resume a workout) -->
+    <section id="screen-home" class="screen">
+      <h2>Start workout</h2>
+      <label>Day
+        <select id="day-label">
+          <option>Pull 1</option>
+          <option>Push 1</option>
+          <option>Lower</option>
+          <option>Pull 2</option>
+          <option>Push 2</option>
+        </select>
+      </label>
+      <label>Bodyweight (lbs, optional)
+        <input id="bw-input" type="number" step="0.1" inputmode="decimal" />
+      </label>
+      <button id="btn-start">Start workout</button>
+
+      <hr />
+      <h3>Quick bodyweight log</h3>
+      <div class="row">
+        <input id="bw-quick" type="number" step="0.1" inputmode="decimal" placeholder="lbs" />
+        <button id="btn-bw-quick">Log</button>
+      </div>
+
+      <hr />
+      <h3>Recent workouts</h3>
+      <ul id="recent-list"></ul>
+    </section>
+
+    <!-- Screen: PICK EXERCISE inside the active workout -->
+    <section id="screen-pick" class="screen" hidden>
+      <div class="row between">
+        <h2 id="pick-title">Pull 1</h2>
+        <button id="btn-finish" class="secondary">Finish</button>
+      </div>
+      <input id="search" placeholder="Search exercises..." />
+      <ul id="exercise-list"></ul>
+    </section>
+
+    <!-- Screen: LOG SETS for the selected exercise -->
+    <section id="screen-log" class="screen" hidden>
+      <div class="row between">
+        <h2 id="log-title">Exercise</h2>
+        <button id="btn-back" class="secondary">Back</button>
+      </div>
+
+      <div id="last-session" class="card">
+        <div class="label">Last time</div>
+        <div id="last-session-body">—</div>
+      </div>
+
+      <form id="set-form" class="card">
+        <div class="row">
+          <label class="grow">Set #
+            <input id="f-set" type="number" min="1" inputmode="numeric" required />
+          </label>
+          <label class="grow">RIR
+            <input id="f-rir" type="number" min="0" max="5" inputmode="numeric" required />
+          </label>
+        </div>
+
+        <!-- For UNILATERAL exercises both load+reps rows show twice (L and R).
+             For BILATERAL exercises only the left row is used and labeled "Load / Reps". -->
+        <div class="row">
+          <label class="grow"><span id="f-load-l-lbl">Load L</span>
+            <input id="f-load-l" type="number" step="0.5" inputmode="decimal" required />
+          </label>
+          <label class="grow"><span id="f-reps-l-lbl">Reps L</span>
+            <input id="f-reps-l" type="number" min="1" inputmode="numeric" required />
+          </label>
+        </div>
+        <div class="row" id="row-right">
+          <label class="grow">Load R
+            <input id="f-load-r" type="number" step="0.5" inputmode="decimal" />
+          </label>
+          <label class="grow">Reps R
+            <input id="f-reps-r" type="number" min="1" inputmode="numeric" />
+          </label>
+        </div>
+
+        <div class="row">
+          <label class="check"><input id="f-straps" type="checkbox" /> Straps</label>
+          <label class="check"><input id="f-comp" type="checkbox" /> Compensated (L gave out)</label>
+        </div>
+
+        <label>Notes
+          <input id="f-notes" type="text" />
+        </label>
+
+        <button type="submit">Save set</button>
+      </form>
+
+      <h3>This session</h3>
+      <ul id="session-sets"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
