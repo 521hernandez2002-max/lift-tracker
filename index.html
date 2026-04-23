@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#111827" />
+  <meta name="theme-color" content="#16a34a" />
   <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon.svg" type="image/svg+xml" />
   <title>Lift Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <!-- Dexie wraps IndexedDB so we can write db.sets.add({...}) instead of 20 lines of IDB boilerplate -->
   <script src="https://unpkg.com/dexie@4.0.10/dist/dexie.js"></script>
 </head>
 <body>
@@ -18,9 +20,9 @@
   </header>
 
   <main>
-    <!-- Screen: HOME (start or resume a workout) -->
+    <!-- Screen: HOME -->
     <section id="screen-home" class="screen">
-      <h2>Start workout</h2>
+      <h2>Start Workout</h2>
       <label>Day
         <select id="day-label">
           <option>Pull 1</option>
@@ -31,13 +33,13 @@
         </select>
       </label>
       <label>Bodyweight (lbs, optional)
-        <input id="bw-input" type="number" step="0.1" inputmode="decimal" />
+        <input id="bw-input" type="number" step="0.1" inputmode="decimal" placeholder="e.g. 185" />
       </label>
-      <button id="btn-start">Start workout</button>
+      <button id="btn-start">Start Workout</button>
 
       <hr />
       <h3>Quick bodyweight log</h3>
-      <div class="row">
+      <div class="bw-row">
         <input id="bw-quick" type="number" step="0.1" inputmode="decimal" placeholder="lbs" />
         <button id="btn-bw-quick">Log</button>
       </div>
@@ -47,7 +49,7 @@
       <ul id="recent-list"></ul>
     </section>
 
-    <!-- Screen: PICK EXERCISE inside the active workout -->
+    <!-- Screen: PICK EXERCISE -->
     <section id="screen-pick" class="screen" hidden>
       <div class="row between">
         <h2 id="pick-title">Pull 1</h2>
@@ -57,11 +59,11 @@
       <ul id="exercise-list"></ul>
     </section>
 
-    <!-- Screen: LOG SETS for the selected exercise -->
+    <!-- Screen: LOG SETS -->
     <section id="screen-log" class="screen" hidden>
       <div class="row between">
         <h2 id="log-title">Exercise</h2>
-        <button id="btn-back" class="secondary">Back</button>
+        <button id="btn-back" class="secondary">&#8592; Back</button>
       </div>
 
       <div id="last-session" class="card">
@@ -79,8 +81,7 @@
           </label>
         </div>
 
-        <!-- For UNILATERAL exercises both load+reps rows show twice (L and R).
-             For BILATERAL exercises only the left row is used and labeled "Load / Reps". -->
+        <!-- Unilateral: both L and R show. Bilateral: only left row, relabeled by app.js -->
         <div class="row">
           <label class="grow"><span id="f-load-l-lbl">Load L</span>
             <input id="f-load-l" type="number" step="0.5" inputmode="decimal" required />
@@ -98,16 +99,16 @@
           </label>
         </div>
 
-        <div class="row">
+        <div class="row" style="margin-top: 6px; flex-wrap: wrap;">
           <label class="check"><input id="f-straps" type="checkbox" /> Straps</label>
           <label class="check"><input id="f-comp" type="checkbox" /> Compensated (L gave out)</label>
         </div>
 
         <label>Notes
-          <input id="f-notes" type="text" />
+          <input id="f-notes" type="text" placeholder="Optional notes..." />
         </label>
 
-        <button type="submit">Save set</button>
+        <button type="submit">Save Set</button>
       </form>
 
       <h3>This session</h3>
